@@ -4,19 +4,8 @@ import sklearn
 import sys
 import os
 
-def load_json_files():
-    """Load state→district and season list from JSON."""
-    with open("data/state_district.json") as f:
-        state_dist = json.load(f)
-
-    with open("data/season_list.json") as f:
-        seasons = json.load(f)
-
-    return state_dist, seasons
-
-
 def load_all_models():
-    """Load model, scaler, encoder + validate version compatibility."""
+    """Load model & scaler + check version compatibility."""
 
     MODEL_DIR = "models"
 
@@ -35,23 +24,19 @@ def load_all_models():
     print(f"Current Python version : {sys.version.split()[0]}")
     print(f"Current Sklearn ver    : {sklearn.__version__}")
 
-    # Tampilkan warning jika beda
+    # Warning mismatch
     if sklearn.__version__ != saved_skl:
         print("\n⚠ WARNING: Sklearn version mismatch!")
         print("   Model may still load, but re-training is recommended.\n")
 
     # === LOAD MODEL ===
     print("Loading model.pkl...")
-    model = joblib.load(os.path.join(MODEL_DIR, "model.pkl"))
+    model = joblib.load(os.path.join(MODEL_DIR, "linear_regression_model.pkl"))
 
     # === LOAD SCALER ===
-    print("Loading minmax.pkl...")
-    scaler = joblib.load(os.path.join(MODEL_DIR, "minmax.pkl"))
-
-    # === LOAD LABEL ENCODER ===
-    print("Loading labelencode.pkl...")
-    encoder = joblib.load(os.path.join(MODEL_DIR, "labelencode.pkl"))
+    print("Loading minmax_scaler.pkl...")
+    scaler = joblib.load(os.path.join(MODEL_DIR, "minmax_scaler.pkl"))
 
     print("\n✔ All models loaded successfully.\n")
 
-    return model, scaler, encoder
+    return model, scaler
