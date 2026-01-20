@@ -33,7 +33,7 @@ with col2:
         "Tahun Akhir",
         min_value=start_year,
         max_value=2100,
-        value=2030,
+        value=2020,
         step=1
     )
 
