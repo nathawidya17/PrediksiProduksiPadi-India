@@ -112,11 +112,4 @@ if submit:
             """
         )
         
-        # Opsi Tambahan: Menampilkan metrik rata-rata kenaikan
-        m1, m2 = st.columns(2)
-        total_increase = df_pred['Production'].iloc[-1] - df_pred['Production'].iloc[0]
         
-        with m1:
-            st.metric(label="Total Kenaikan Produksi (Ton)", value=f"{total_increase:,.2f}")
-        with m2:
-            st.metric(label="Rata-rata Pertumbuhan per Tahun", value=f"{avg_growth:.2f}%")
