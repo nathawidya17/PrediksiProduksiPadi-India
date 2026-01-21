@@ -96,20 +96,28 @@ if submit:
     st.divider() # Garis pemisah visual
 
     # --- Bagian Storytelling / Insight ---
-    st.subheader("💡 Analisis Tren Produksi")
+    st.subheader("Analisis Tren Produksi")
     
-    # Menggunakan container dengan background tipis (bisa diatur via CSS, atau default st.info/success)
-    with st.container():
-        st.info(
-            f"""
-            **Kesimpulan Prediksi:**
-            
-            Berdasarkan grafik di atas, terlihat jelas bahwa **hasil prediksi produksi padi cenderung naik dari tahun ke tahun** ({start_year} - {end_year}). 
+    # Menggunakan st.markdown dengan HTML agar bisa atur warna (putih) dan ukuran font
+    st.markdown(
+        f"""
+        <div style="
+            background-color: #3174f0; 
+            padding: 20px; 
+            border-radius: 10px;
+            color: white;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        ">
+            <strong style="font-size: 22px;"> Kesimpulan Prediksi:</strong>
+            <br><br>
+            Berdasarkan grafik di atas, terlihat jelas bahwa <strong>hasil prediksi produksi padi cenderung naik dari tahun ke tahun</strong> ({start_year} - {end_year}). 
             Peningkatan luas area tanam memberikan dampak positif yang signifikan terhadap hasil panen.
-            
-            Selain itu, jika kita melihat laju pertumbuhannya, **persentase kenaikan produksi cenderung positif tiap tahunnya dan menunjukan pola yang mulai stabil**. 
+            <br><br>
+            Selain itu, jika kita melihat laju pertumbuhannya, <strong>persentase kenaikan produksi cenderung positif tiap tahunnya dan menunjukan pola yang mulai stabil</strong>. 
             Hal ini mengindikasikan bahwa produktivitas pertanian diprediksi akan terus terjaga seiring dengan bertambahnya waktu dan luas lahan.
-            """
-        )
-        
-        
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
