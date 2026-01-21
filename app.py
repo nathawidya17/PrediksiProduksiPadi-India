@@ -45,6 +45,7 @@ if submit:
     year_range = list(range(start_year, end_year + 1))
     rows = []
 
+    # Data dummy area (sesuai kode asli Anda)
     AREA_BY_YEAR = {
         2016: 100,
         2017: 150,
@@ -84,7 +85,38 @@ if submit:
 
     df_pred = pd.DataFrame(rows)
 
+    # Menghitung Persentase Pertumbuhan untuk Data Pendukung
+    df_pred['Growth (%)'] = df_pred['Production'].pct_change() * 100
+    avg_growth = df_pred['Growth (%)'].mean()
+
+    # --- Bagian Visualisasi ---
     st.subheader("Visualisasi Prediksi Produksi Padi India")
     plot_combined_chart(df_pred)
-
     
+    st.divider() # Garis pemisah visual
+
+    # --- Bagian Storytelling / Insight ---
+    st.subheader("💡 Analisis Tren Produksi")
+    
+    # Menggunakan container dengan background tipis (bisa diatur via CSS, atau default st.info/success)
+    with st.container():
+        st.info(
+            f"""
+            **Kesimpulan Prediksi:**
+            
+            Berdasarkan grafik di atas, terlihat jelas bahwa **hasil prediksi produksi padi cenderung naik dari tahun ke tahun** ({start_year} - {end_year}). 
+            Peningkatan luas area tanam memberikan dampak positif yang signifikan terhadap hasil panen.
+            
+            Selain itu, jika kita melihat laju pertumbuhannya, **persentase kenaikan produksi cenderung positif tiap tahunnya dan menunjukan pola yang mulai stabil**. 
+            Hal ini mengindikasikan bahwa produktivitas pertanian diprediksi akan terus terjaga seiring dengan bertambahnya waktu dan luas lahan.
+            """
+        )
+        
+        # Opsi Tambahan: Menampilkan metrik rata-rata kenaikan
+        m1, m2 = st.columns(2)
+        total_increase = df_pred['Production'].iloc[-1] - df_pred['Production'].iloc[0]
+        
+        with m1:
+            st.metric(label="Total Kenaikan Produksi (Ton)", value=f"{total_increase:,.2f}")
+        with m2:
+            st.metric(label="Rata-rata Pertumbuhan per Tahun", value=f"{avg_growth:.2f}%")
